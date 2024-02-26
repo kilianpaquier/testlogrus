@@ -15,16 +15,16 @@ The testlogrus package exposes two functions to use during testing. When calling
 
 ```go
 func TestSome(t *testing.T) {
-  t.Run("error_test", func(t *testing.T) {
-    // Arrange
-    testlogrus.CatchLogs()
+    t.Run("error_test", func(t *testing.T) {
+        // Arrange
+        testlogrus.CatchLogs()
 
-    // Act
-    // call some functions that log with logrus
+        // Act
+        // call some functions that log with logrus
 
-    // Assert
-    logs := testlogrus.Logs()
-    // assert some things around function expected logs
-  })
+        // Assert
+        logs := testlogrus.Logs()
+        // assert some things around function expected logs
+    })
 }
 ```
