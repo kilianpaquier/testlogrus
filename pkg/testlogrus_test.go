@@ -12,9 +12,16 @@ import (
 
 func TestCatchLogs(t *testing.T) {
 	log := logrus.WithContext(context.Background())
-	testlogrus.CatchLogs()
+
+	t.Run("error_panic", func(t *testing.T) {
+		// Act & Assert
+		assert.PanicsWithValue(t, testlogrus.ErrNoHook, func() { testlogrus.Logs() })
+	})
 
 	t.Run("success", func(t *testing.T) {
+		// Arrange
+		testlogrus.CatchLogs()
+
 		// Act
 		log.Warn("something")
 
