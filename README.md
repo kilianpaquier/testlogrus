@@ -17,7 +17,9 @@ The testlogrus package exposes two functions to use during testing. When calling
 func TestSome(t *testing.T) {
     t.Run("error_test", func(t *testing.T) {
         // Arrange
-        testlogrus.CatchLogs()
+        // mandatory call to setup logrus logging hook
+        // logging hook is set to nil at the end of t.Run
+        testlogrus.CatchLogs(t)
 
         // Act
         // call some functions that log with logrus

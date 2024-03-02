@@ -3,6 +3,7 @@ package testlogrus
 import (
 	"errors"
 	"strings"
+	"testing"
 
 	"github.com/sirupsen/logrus/hooks/test"
 )
@@ -12,10 +13,19 @@ var hook *test.Hook
 // ErrNoHook is the panic error in case Logs is called without a previous call to CatchLogs.
 var ErrNoHook = errors.New("testlogrus hook wasn't initialized with CatchLogs")
 
-// CatchLogs creates a hook over logrus logs. Easy to use with Logs function to then catch written logs in tests.
+// CatchLogs creates a hook over logrus logs.
+// Easy to use with Logs function to catch written logs in tests.
 //
 // Useful to confirm logging behavior over application.
-func CatchLogs() {
+//
+// Note that at the end of t.Run a cleanup is called to reset the hook.
+// As such CatchLogs must either be called at the beginning of every t.Run needing a log verification
+// or at the beginning of every test function (TestXXX) needing logs verification.
+func CatchLogs(t testing.TB) {
+	// clean hook to ensure every test needs to call CatchLogs
+	t.Cleanup(func() { hook = nil })
+
+	// create global hook
 	hook = test.NewGlobal()
 }
 

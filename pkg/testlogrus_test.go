@@ -20,7 +20,7 @@ func TestCatchLogs(t *testing.T) {
 
 	t.Run("success", func(t *testing.T) {
 		// Arrange
-		testlogrus.CatchLogs()
+		testlogrus.CatchLogs(t)
 
 		// Act
 		log.Warn("something")
